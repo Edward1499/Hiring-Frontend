@@ -1,0 +1,236 @@
+<div class="container-fluid" [formGroup]="form">
+    <h1>Mi Perfil</h1>
+    <div class="row mb-3">
+        <div class="col-6">
+            <!-- <label for="exampleFormControlInput1" class="form-label">Cedula</label>
+            <input type="email" class="form-control" id="exampleFormControlInput1" placeholder="name@example.com"> -->
+            <mat-form-field class="example-full-width" appearance="fill">
+              <mat-label>Cedula</mat-label>
+              <input matInput type="number" formControlName="personalId">
+            </mat-form-field>
+        </div>
+        <div class="col-6">
+            <!-- <label for="exampleFormControlInput1" class="form-label">Nombre</label>
+            <input type="email" class="form-control" id="exampleFormControlInput1" placeholder="name@example.com"> -->
+            <mat-form-field class="example-full-width" appearance="fill">
+              <mat-label>Nombre</mat-label>
+              <input matInput formControlName="name">
+            </mat-form-field>
+        </div>
+    </div>
+    <div class="row mb-3">
+        <div class="col-6">
+            <!-- <label for="exampleFormControlInput1" class="form-label">Apellido</label>
+            <input type="email" class="form-control" id="exampleFormControlInput1" placeholder="name@example.com"> -->
+            <mat-form-field class="example-full-width" appearance="fill">
+              <mat-label>Apellido</mat-label>
+              <input matInput formControlName="surname">
+            </mat-form-field>
+        </div>
+        <div class="col-6">
+            <!-- <label for="exampleFormControlInput1" class="form-label">Departamento</label> -->
+            <mat-form-field class="example-chip-list" appearance="fill">
+                <mat-label>Departamento</mat-label>
+                <mat-select formControlName="departmentId">
+                    <mat-option *ngFor="let department of departments" [value]="department.id">
+                    {{department.name}}
+                    </mat-option>
+                </mat-select>
+            </mat-form-field>
+        </div>
+    </div>
+    <div class="row mb-3">
+        <div class="col-6">
+            <!-- <label for="exampleFormControlInput1" class="form-label">Salario deseado</label>
+            <input type="number" class="form-control" id="exampleFormControlInput1" placeholder="Salario deseado"> -->
+            <mat-form-field class="example-full-width" appearance="fill">
+              <mat-label>Salario deseado</mat-label>
+              <input matInput type="number" formControlName="salary">
+            </mat-form-field>
+        </div>
+        <div class="col-6">
+            <!-- <label for="exampleFormControlInput1" class="form-label">Recomendado por</label>
+            <input type="email" class="form-control" id="exampleFormControlInput1" placeholder="name@example.com"> -->
+            <mat-form-field class="example-full-width" appearance="fill">
+              <mat-label>Recomendado por</mat-label>
+              <input matInput formControlName="recomendedBy">
+            </mat-form-field>
+        </div>
+    </div>
+    <div class="row mb-3">
+        <div class="col-6">
+            <!-- <label for="exampleFormControlInput1" class="form-label">Salario deseado</label> -->
+            <mat-form-field class="example-chip-list" appearance="fill">
+                <mat-label>Competencias</mat-label>
+                <mat-chip-list #chipList aria-label="Fruit selection">
+                  <mat-chip
+                    *ngFor="let competition of competitions"
+                    (removed)="remove(competition)">
+                    {{competition.description}}
+                    <button matChipRemove>
+                      <mat-icon>cancel</mat-icon>
+                    </button>
+                  </mat-chip>
+                  <input
+                    placeholder="Nueva competencia..."
+                    #fruitInput
+                    [formControl]="fruitCtrl"
+                    [matAutocomplete]="auto"
+                    [matChipInputFor]="chipList"
+                    [matChipInputSeparatorKeyCodes]="separatorKeysCodes"
+                    (matChipInputTokenEnd)="add($event)">
+                </mat-chip-list>
+                <mat-autocomplete #auto="matAutocomplete" (optionSelected)="selected($event)">
+                  <mat-option *ngFor="let competition of allCompetitions" [value]="competition">
+                    {{competition.description}}
+                  </mat-option>
+                </mat-autocomplete>
+              </mat-form-field>
+        </div>
+    </div>
+    <div class="row mb-3">
+      <div class="col-6">
+        <label for="exampleFormControlInput1" class="form-label">Idiomas</label>
+        <table mat-table [dataSource]="languageSource" class="mat-elevation-z8 mb-2">
+          
+            <!-- Name Column -->
+            <ng-container matColumnDef="name">
+              <th mat-header-cell *matHeaderCellDef> Idioma </th>
+              <td mat-cell *matCellDef="let element;"> {{element.language.name}}</td>
+            </ng-container>
+          
+            <!-- level Column -->
+            <ng-container matColumnDef="level">
+              <th mat-header-cell *matHeaderCellDef> Nivel </th>
+              <td mat-cell *matCellDef="let element"> {{element.level.value}} </td>
+            </ng-container>
+
+            <!-- Action Column -->
+            <ng-container matColumnDef="action">
+                <th mat-header-cell *matHeaderCellDef> Accion </th>
+                <td mat-cell *matCellDef="let element; let i = index;"> 
+                    <button mat-icon-button color="warn" 
+                            aria-label="Example icon button with a home icon"
+                            (click)="onRemoveLanguage(i)">
+                        <mat-icon>restore_from_trash</mat-icon>
+                    </button>
+                </td>
+              </ng-container>
+          
+            <tr mat-header-row *matHeaderRowDef="displayedLanguageColumns"></tr>
+            <tr mat-row *matRowDef="let row; columns: displayedLanguageColumns;"></tr>
+          </table>
+        <button mat-raised-button color="primary" (click)="openDialog()">Agregar</button>
+    </div>
+        <div class="col-6">
+            <!-- <label for="exampleFormControlInput1" class="form-label">Salario deseado</label> -->
+            <label for="exampleFormControlInput1" class="form-label">Experiencias laborales</label>
+            <table mat-table [dataSource]="expirienceSource" class="mat-elevation-z8 mb-2">
+              
+                <!-- Name Column -->
+                <ng-container matColumnDef="company">
+                  <th mat-header-cell *matHeaderCellDef> Empresa </th>
+                  <td mat-cell *matCellDef="let element;"> {{element.company}}</td>
+                </ng-container>
+              
+                <!-- level Column -->
+                <ng-container matColumnDef="position">
+                  <th mat-header-cell *matHeaderCellDef> Posicion </th>
+                  <td mat-cell *matCellDef="let element"> {{element.currentPosition}} </td>
+                </ng-container>
+
+                <!-- level Column -->
+                <ng-container matColumnDef="startDate">
+                    <th mat-header-cell *matHeaderCellDef> Desde </th>
+                    <td mat-cell *matCellDef="let element"> {{element.startDate | date: 'dd-MM-yyyy' }} </td>
+                  </ng-container>
+
+                  <!-- level Column -->
+                <ng-container matColumnDef="endDate">
+                    <th mat-header-cell *matHeaderCellDef> Hasta </th>
+                    <td mat-cell *matCellDef="let element"> {{element.endDate | date: 'dd-MM-yyyy'}} </td>
+                  </ng-container>
+
+                  <!-- level Column -->
+                <ng-container matColumnDef="salary">
+                    <th mat-header-cell *matHeaderCellDef> Salario </th>
+                    <td mat-cell *matCellDef="let element"> {{element.salary}} </td>
+                  </ng-container>
+
+                <!-- Action Column -->
+                <ng-container matColumnDef="action">
+                    <th mat-header-cell *matHeaderCellDef> Accion </th>
+                    <td mat-cell *matCellDef="let element; let i = index;"> 
+                        <button mat-icon-button color="warn" 
+                                aria-label="Example icon button with a home icon"
+                                (click)="onRemoveExpirience(i)">
+                            <mat-icon>restore_from_trash</mat-icon>
+                        </button>
+                    </td>
+                  </ng-container>
+              
+                <tr mat-header-row *matHeaderRowDef="displayedExpirienceColumns"></tr>
+                <tr mat-row *matRowDef="let row; columns: displayedExpirienceColumns;"></tr>
+              </table>
+            <button mat-raised-button color="primary" (click)="openExpirienceDialog()">Agregar</button>
+        </div>
+    </div>
+    <div class="row mb-3">
+      <div class="col-6">
+        <!-- <label for="exampleFormControlInput1" class="form-label">Salario deseado</label> -->
+        <label for="exampleFormControlInput1" class="form-label">Capacitaciones</label>
+        <table mat-table [dataSource]="trainingSource" class="mat-elevation-z8 mb-2">
+          
+            <!-- Name Column -->
+            <ng-container matColumnDef="description">
+              <th mat-header-cell *matHeaderCellDef> Descripcion </th>
+              <td mat-cell *matCellDef="let element;"> {{element.description}}</td>
+            </ng-container>
+          
+            <!-- level Column -->
+            <ng-container matColumnDef="academicLevel">
+              <th mat-header-cell *matHeaderCellDef> Nivel Academico </th>
+              <td mat-cell *matCellDef="let element"> {{element.academicLevel.name}} </td>
+            </ng-container>
+
+            <!-- level Column -->
+            <ng-container matColumnDef="startDate">
+                <th mat-header-cell *matHeaderCellDef> Desde </th>
+                <td mat-cell *matCellDef="let element"> {{element.startDate | date: 'dd-MM-yyyy' }} </td>
+              </ng-container>
+
+              <!-- level Column -->
+            <ng-container matColumnDef="endDate">
+                <th mat-header-cell *matHeaderCellDef> Hasta </th>
+                <td mat-cell *matCellDef="let element"> {{element.endDate | date: 'dd-MM-yyyy'}} </td>
+              </ng-container>
+
+              <!-- level Column -->
+            <ng-container matColumnDef="institution">
+                <th mat-header-cell *matHeaderCellDef> Institucion </th>
+                <td mat-cell *matCellDef="let element"> {{element.institution}} </td>
+              </ng-container>
+
+            <!-- Action Column -->
+            <ng-container matColumnDef="action">
+                <th mat-header-cell *matHeaderCellDef> Accion </th>
+                <td mat-cell *matCellDef="let element; let i = index;"> 
+                    <button mat-icon-button color="warn" 
+                            aria-label="Example icon button with a home icon"
+                            (click)="onRemoveTraining(i)">
+                        <mat-icon>restore_from_trash</mat-icon>
+                    </button>
+                </td>
+              </ng-container>
+          
+            <tr mat-header-row *matHeaderRowDef="displayedTrainingColumns"></tr>
+            <tr mat-row *matRowDef="let row; columns: displayedTrainingColumns;"></tr>
+          </table>
+        <button mat-raised-button color="primary" (click)="openTrainingDialog()">Agregar</button>
+    </div>
+    </div>
+    <div class="d-flex justify-content-end">
+      <button mat-raised-button color="warn">Cancelar</button>
+        <button mat-raised-button color="success" (click)="save()">Guardar</button>
+    </div>
+</div>

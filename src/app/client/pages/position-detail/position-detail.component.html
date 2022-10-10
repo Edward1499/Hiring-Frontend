@@ -1,0 +1,31 @@
+<div class="container-fluid">
+    <div class="d-flex justify-content-between">
+        <div class="main d-flex">
+            <div class="company-logo-img">
+                <img src="https://i.pinimg.com/originals/51/10/19/51101970f30856c14fe25bbfbaae2817.png" />
+            </div>
+            <div class="d-flex flex-column" style="margin-left:5px;">
+                <span style="width: auto; font-weight: bold; font-size: 18px;">
+                    {{position?.name}}
+                </span>
+                <small>RD${{position?.minSalary}} - RD${{position?.maxSalary}}</small>
+                <div class="skills-container">
+                    <div class="skill" *ngFor="let skill of position?.skills">{{skill?.description}}</div>
+                </div>
+            </div>
+        </div>
+        <div>
+            <button class="btn btn-success" (click)="apply()" [disabled]="hasApplied">Aplicar</button>
+        </div>
+    </div>
+    <div class="container mt-5">
+        <div class="card">
+            <div class="card-header">
+              Descripcion
+            </div>
+            <div class="card-body">
+                <div [innerHTML]="position?.description"></div>
+            </div>
+          </div>
+    </div>
+</div>

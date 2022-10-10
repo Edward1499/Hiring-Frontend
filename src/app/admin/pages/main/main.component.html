@@ -1,0 +1,37 @@
+<div class="test">
+    <div class="main-container">
+        <div class="menu">
+            <div class="image">
+                <img [routerLink]="['/admin']" src="https://blog.recruiter.com/hubfs/hiring%20now.jpg">
+            </div>
+            <ul>
+                <a id="item-1" [routerLink]="['/admin/departamentos']">
+                    Gestion de departamentos
+                </a>
+                <a id="item-1" [routerLink]="['/admin/competencias']">
+                    Gestion de competencias
+                </a>
+                <a id="item-1" [routerLink]="['/admin/idiomas']">
+                    Gestion de idiomas
+                </a>
+                <a id="item-1" [routerLink]="['/admin/posiciones']">
+                    Gestion de posiciones
+                </a>
+                <a id="item-1" [routerLink]="['/admin/empleados']">
+                    Gestion de empleados
+                </a>
+                <a id="item-1" href="#" (click)="logout()">
+                    Cerrar sesion
+                </a>
+            </ul>
+        </div>
+    
+        <div class="nav d-flex justify-content-end align-items-center">
+            <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQUL74mlMc2p3yCzWfqRlR6RUF1inRZgnbqew&usqp=CAU" class="mr-2">
+        </div>
+
+        <div class="content">
+            <router-outlet></router-outlet>
+        </div>
+    </div>
+</div>

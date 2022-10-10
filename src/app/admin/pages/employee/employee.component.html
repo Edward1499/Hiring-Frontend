@@ -1,0 +1,64 @@
+<div class="container-fluid">
+    <div class="d-flex justify-content-between mb-3">
+        <h1>Gestion de empleados</h1>
+        <button class="btn btn-success btn-block" (click)="openPDF()">Descargar PDF</button>
+    </div>
+    <div class="d-flex">
+        <mat-form-field class="example-full-width" appearance="fill">
+            <mat-label>Fecha inicio</mat-label>
+            <input matInput [matDatepicker]="picker" [formControl]="startDate">
+            <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+            <mat-datepicker #picker></mat-datepicker>
+        </mat-form-field>
+        <mat-form-field class="example-full-width" appearance="fill">
+            <mat-label>Fecha fin</mat-label>
+            <input matInput [matDatepicker]="picker2" [formControl]="endDate">
+            <mat-datepicker-toggle matSuffix [for]="picker2"></mat-datepicker-toggle>
+            <mat-datepicker #picker2></mat-datepicker>
+        </mat-form-field>
+        <button class="btn btn-primary" style="height: auto; width: auto;" (click)="search()">Buscar</button>
+    </div>
+    <table mat-table [dataSource]="dataSource" class="mat-elevation-z8" id="htmlData">
+
+        <!--- Note that these columns can be defined in any order.
+              The actual rendered columns are set as a property on the row definition" -->
+      
+        <!-- Position Column -->
+        <ng-container matColumnDef="name">
+          <th mat-header-cell *matHeaderCellDef> Nombre </th>
+          <td mat-cell *matCellDef="let element"> {{element.name}} </td>
+        </ng-container>
+      
+        <!-- Name Column -->
+        <ng-container matColumnDef="surname">
+          <th mat-header-cell *matHeaderCellDef> Apellido </th>
+          <td mat-cell *matCellDef="let element"> {{element.surname}} </td>
+        </ng-container>
+      
+        <!-- Weight Column -->
+        <ng-container matColumnDef="position">
+          <th mat-header-cell *matHeaderCellDef> Posicion </th>
+          <td mat-cell *matCellDef="let element"> {{element.position}} </td>
+        </ng-container>
+      
+        <!-- Symbol Column -->
+        <ng-container matColumnDef="monthlySalary">
+          <th mat-header-cell *matHeaderCellDef> Salario Mensual </th>
+          <td mat-cell *matCellDef="let element"> {{element.monthlySalary | number}} </td>
+        </ng-container>
+
+        <ng-container matColumnDef="startDate">
+            <th mat-header-cell *matHeaderCellDef> Fecha de inicio </th>
+            <td mat-cell *matCellDef="let element"> {{element.startDate | date: 'dd-MM-yyyy' }} </td>
+          </ng-container>
+      
+        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+
+      </table>
+      <mat-paginator [length]="100"
+              [pageSize]="5"
+              [pageSizeOptions]="[5, 10, 25, 100]"
+              aria-label="Select page">
+      </mat-paginator>
+</div>

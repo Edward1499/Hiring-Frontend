@@ -1,0 +1,18 @@
+<div class="container-fluid">
+    <div class="d-flex justify-content-between mb-3">
+        <h1>Posiciones</h1>
+    </div>
+    <article class="job-card mb-3" *ngFor="let position of positions">
+        <div class="company-logo-img">
+          <img src="https://i.pinimg.com/originals/51/10/19/51101970f30856c14fe25bbfbaae2817.png" />
+        </div>
+        <div class="job-title">{{position.name}}</div>
+        <div class="company-name">RD${{position.minSalary}} - RD${{position.maxSalary}}</div>
+        <div class="skills-container">
+          <div class="skill" *ngFor="let skill of position.skills">{{skill.description}}</div>
+        </div>
+        <button class="apply" (click)="apply(position)">Aplicar</button>
+        <!-- <button class="save">Candidatos</button> -->
+        <a  [routerLink]="['/client/posicion', position.id]"></a>
+      </article>
+</div>

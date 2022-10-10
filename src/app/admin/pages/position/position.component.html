@@ -1,0 +1,19 @@
+<div class="container-fluid">
+    <div class="d-flex justify-content-between mb-3">
+        <h1>Gestion de posiciones</h1>
+        <button style="width: auto;" mat-raised-button color="primary" [routerLink]="['/admin/agregar-posicion']">Agregar</button>
+    </div>
+    <article class="job-card mb-3" *ngFor="let position of positions">
+        <div class="company-logo-img">
+          <img src="https://i.pinimg.com/originals/51/10/19/51101970f30856c14fe25bbfbaae2817.png" />
+        </div>
+        <div class="job-title">{{position.name}}</div>
+        <div class="company-name">{{position.isActive ? 'Activa' : 'Inactiva'}}</div>
+        <div class="skills-container">
+          <div class="skill" *ngFor="let skill of position.skills">{{skill.description}}</div>
+        </div>
+        <!-- <button class="disable">DesactivarDesactivar</button> -->
+        <button class="save" (click)="openDialog(position)" [disabled]="!position.isActive">Candidatos</button>
+        <a  [routerLink]="['/admin/editar-posicion', position.id]"></a>
+      </article>
+</div>
